@@ -1,5 +1,10 @@
 ﻿namespace Lab0
 {
+    /// <summary>
+    /// Basics of C# activity
+    /// Author: Martin Maquilan (martin.maquilan@edu.sait.ca)
+    /// Date: Sept 15, 2023
+    /// </summary>
     internal class Program
     {
         static void Main(string[] args)
