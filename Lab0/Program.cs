@@ -4,38 +4,38 @@
     {
         static void Main(string[] args)
         {
-            int low;
-            int high;
+            double low;
+            double high;
 
             Console.WriteLine("Enter a low number: ");
-            low = int.Parse(Console.ReadLine());
+            low = double.Parse(Console.ReadLine());
 
             while (low < 0)
             {
                 Console.WriteLine("Please enter a positive number.");
 
                 Console.WriteLine("Enter a low number: ");
-                low = int.Parse(Console.ReadLine());
+                low = double.Parse(Console.ReadLine());
             }
 
             Console.WriteLine("Enter a high number: ");
-            high = int.Parse(Console.ReadLine());
+            high = double.Parse(Console.ReadLine());
             
             while (high < low)
             {
                 Console.WriteLine("Please enter a number higher than the low number");
 
                 Console.WriteLine("Enter a high number: ");
-                high = int.Parse(Console.ReadLine());
+                high = double.Parse(Console.ReadLine());
             }
 
-            int difference = high - low;
+            double difference = high - low;
             Console.WriteLine($"The difference between the two numbers is {difference}");
-            int[] numsArray = new int[difference];
+            double[] numsArray = new double[(int)Math.Ceiling(difference)];
 
-            for (int n = low, i = 0; n <= high && i < difference; n++, i++)
+            for (double n = low, i = 0; n <= high && i < difference; n++, i++)
             {
-                numsArray[i] = n;
+                numsArray[(int)i] = n;
             }
 
             StreamWriter write = File.CreateText("data.txt");
@@ -49,6 +49,47 @@
 
             Console.WriteLine("Wrote to file");
 
+            double sum = 0;
+
+            using (StreamReader reader = new StreamReader("data.txt"))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    double number;
+                    if (double.TryParse(line, out number))
+                    {
+                        sum += number;
+                    }
+                }
+            }
+
+            double roundedSum = Math.Round(sum, 2);
+
+            Console.WriteLine($"The sum of the numbers in the file is {roundedSum}");
+
+            Console.WriteLine("The prime numbers between the low and high numbers are: ");
+            for(double n = low; n <= high; n++)
+            {
+                if (IsPrime(n))
+                {
+                    Console.WriteLine(n);
+                }
+            }
+        
+
+        static bool IsPrime(double n)
+            {
+                for (double denominator = n - 1; denominator > 1; denominator--)
+                {
+                    double remainder = n % denominator;
+
+                    if (remainder == 0)
+                        return false;
+                }
+
+                return true;
+            }
         }
     }
 }
